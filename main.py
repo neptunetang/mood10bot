@@ -19,6 +19,7 @@ import time
 import telepot
 from telepot.loop import MessageLoop
 from flask import Flask, request
+import os
 
 
 def handle(msg):
@@ -32,6 +33,7 @@ def handle(msg):
 TOKEN = '1694116177:AAEj2dOOxmUZLV0d90FCvn8A5f61cwxLh2E'
 
 bot = telepot.Bot(TOKEN)
+server = Flask(__name__)
 MessageLoop(bot, handle).run_as_thread()
 print('Listening ...')
 
