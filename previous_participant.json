@@ -1,0 +1,26 @@
+{"chatid": 1685150997, "time": "19:00"}
+{"chatid": 1364077674, "time": "21:00"}
+{"chatid": 1431933292, "time": "21:00"}
+{"chatid": 234677771, "time": "20:00"}
+{"chatid": 995436996, "time": "19:30"}
+
+{"chat_id": 234677771, "emoji": "\ud83d\ude2d", "stress": "Medium level", "snack": "Potato chips from Lays", "comment": "I eat too little today", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "\ud83d\ude0e", "stress": "A little bit stressful", "snack": "Apple juice", "comment": "Just right", "suggest": "/none"}
+{"chat_id": 995436996, "emoji": "\ud83d\ude05", "stress": "Medium level", "snack": "/no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 1364077674, "emoji": "\ud83d\udc34", "stress": "Very stressful", "snack": "Cheese cake", "comment": "Very not healthy", "suggest": "/none"}
+{"chat_id": 1685150997, "emoji": "\ud83d\ude14", "stress": "3", "snack": "chip", "comment": "/none", "suggest": "/none"}
+{"chat_id": 1431933292, "emoji": "\ud83d\ude0d", "stress": "5\uff0f10", "snack": "/no", "comment": "very health\uff0cplenty vegetable with pasta", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "/input", "stress": "Medium level", "snack": "/no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "\ud83d\ude22", "stress": "A little bit stressful", "snack": "no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "\ud83d\ude06", "stress": "Not at all", "snack": "yes", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "\ud83d\ude21", "stress": "Very stressful", "snack": "a lot of chips", "happy_after_snack": "no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "\ud83d\ude1c", "stress": "Medium level", "snack": "/no", "happy_after_snack": "no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "emoji": "\ud83c\udf40", "stress": "A little bit stressful", "snack": "Ice cream", "happy_after_snack": "yes", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "stress": "A little bit stressful", "emoji": "\ud83c\udf40", "snack": "/no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "stress": "A little bit stressful", "emoji": "\u263a", "snack": "/no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 234677771, "stress": "/input", "emoji": "\ud83d\ude2f", "snack": "/no", "comment": "/none", "suggest": "/none"}
+{"chat_id": 1685150997, "stress": "Medium level", "emoji": "\ud83d\ude1e", "snack": "banana", "happy_after_snack": "no", "comment": "not regular", "suggest": "/none"}
+{"chat_id": 995436996, "stress": "Very stressful", "emoji": "\ud83d\ude21", "snack": "/no", "comment": "Balanced and regular", "suggest": "/none"}
+{"chat_id": 234677771, "stress": "Very stressful", "emoji": "\ud83e\udd37\u200d\u2642", "snack": "Chocolate, orange, cookies", "happy_after_snack": "yes", "comment": "Eating too much", "suggest": "/none"}
+{"chat_id": 234677771, "stress": "Very stressful", "emoji": "\ud83e\udd2c", "snack": "apple, chips, coffee", "happy_after_snack": "yes", "guilty_after_snack": "yes", "comment": "/none", "suggest": "/none"}
+{"chat_id": 1364077674, "stress": "Very stressful", "emoji": "\ud83d\udc34", "snack": "/no", "comment": "Too much", "suggest": "/none"}
