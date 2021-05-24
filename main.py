@@ -197,18 +197,14 @@ class GoldenArches(telepot.helper.ChatHandler):
             self.indicator = 'registration'
 
 
+
 bot = telepot.DelegatorBot(TOKEN, [
     pave_event_space()(
-        per_chat_id(), create_open, GoldenArches, timeout=86400*30),
+        per_chat_id(), create_open, GoldenArches, timeout=86400),
 ])
 server = Flask(__name__)
 MessageLoop(bot).run_as_thread()
 print('Listening ...')
-
-
-# # Keep the program running.
-# while 1:
-#     time.sleep(10)
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
