@@ -1,6 +1,6 @@
 import time
 import telepot
-import schedule
+# import schedule
 from threading import Thread
 import json
 from telepot.loop import MessageLoop
@@ -116,7 +116,7 @@ class GoldenArches(telepot.helper.ChatHandler):
                 keyboard=[['Not at all'], ['A little bit stressful'], ['Medium level'], ['Very stressful']],
                 one_time_keyboard=True)
             bot.sendMessage(chat_id,
-                            text='Okay, let\'s get started! Could you please indicate your stress level over the day?',
+                            text='Okay, let\'s get started! Could you please indicate your current stress level?',
                             reply_markup=mark_up)
             self.indicator = 'stress'
         elif self.indicator == 'stress':
@@ -208,20 +208,19 @@ bot = telepot.DelegatorBot(TOKEN, [
         per_chat_id(), create_open, GoldenArches, timeout=86400),
 ])
 server = Flask(__name__)
-# MessageLoop(bot).run_as_thread()
-bot.message_loop()
+MessageLoop(bot).run_as_thread()
+
 
 # print('Listening ...')
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    bot.process_new_updates([telepot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
 
 @server.route("/")
 def webhook():
-    bot.remove_webhook()
     bot.set_webhook(url='https://mood10.herokuapp.com/' + TOKEN)
     return "!", 200
 
@@ -234,3 +233,4 @@ if __name__ == "__main__":
     # schedule.every().day.at(record["time"]).do(send_message, chatid=record['chatid'])
     # Thread(target=schedule_checker).start()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
+
