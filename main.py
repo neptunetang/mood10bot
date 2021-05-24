@@ -25,15 +25,18 @@ HEADERS = {
     'token': 'token_for_identifier'
 }
 
+
 def schedule_checker():
     while True:
         schedule.run_pending()
         time.sleep(1)
 
+
 def send_message(chatid):
     bot.sendMessage(chatid,
-                "Hello, this is a reminder for input: /input, if you have already filled in, please ignore this message. Thank you very much!")
-    bot .sendMessage(MASTER, 'reminder for ' + str(chatid) + ' has sent.')
+                    "Hello, this is a reminder for input: /input, if you have already filled in, please ignore this message. Thank you very much!")
+    bot.sendMessage(MASTER, 'reminder for ' + str(chatid) + ' has sent.')
+
 
 class GoldenArches(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
@@ -66,9 +69,11 @@ class GoldenArches(telepot.helper.ChatHandler):
                 #                                   one_time_keyboard=True)
                 #     bot.sendMessage(chat_id, 'Hi, we are Data-enabled design Mood Team 10. This is the data-collecting telegram bot run by MoodTeam10. You can contact @NeptuneTang or on our Teams channel if something serious happens. '
                 #                              'Our research goal is to find out the relationship between stress eating, flavor and mood. Do you want to register in the test?', reply_markup=mark_up)
-                bot.sendMessage(chat_id, 'Hi, we are Data-enabled design Mood Team 10. This is the data-collecting telegram bot run by MoodTeam10. You can contact @NeptuneTang or on our Teams channel if something serious happens. '
-                                         'Our research goal is to find out the relationship between stress eating, flavor and mood.')
-                bot.sendMessage(chat_id, 'Select /input if you want to start your input. (reminder /set_reminder will be fixed later:) ')
+                bot.sendMessage(chat_id,
+                                'Hi, we are Data-enabled design Mood Team 10. This is the data-collecting telegram bot run by MoodTeam10. You can contact @NeptuneTang or on our Teams channel if something serious happens. '
+                                'Our research goal is to find out the relationship between stress eating, flavor and mood.')
+                bot.sendMessage(chat_id,
+                                'Select /input if you want to start your input. (reminder /set_reminder will be fixed later:) ')
 
                 self.step = 'none'
             # elif msg['text'] == 'yes':
@@ -125,7 +130,8 @@ class GoldenArches(telepot.helper.ChatHandler):
             self.indicator = 'snack'
         elif self.indicator == 'snack':
             if content_type == 'photo':
-                file_name = str(chat_id)+'  '+ str(datetime.now().date())+'  '+str(datetime.now().time()) + '.png'
+                file_name = str(chat_id) + '  ' + str(datetime.now().date()) + '  ' + str(
+                    datetime.now().time()) + '.png'
                 self.message['image'] = file_name
                 bot.sendPhoto(MASTER, msg['photo'][-1]['file_id'], file_name)
                 mark_up = ReplyKeyboardMarkup(
@@ -197,14 +203,15 @@ class GoldenArches(telepot.helper.ChatHandler):
             self.indicator = 'registration'
 
 
-
 bot = telepot.DelegatorBot(TOKEN, [
     pave_event_space()(
         per_chat_id(), create_open, GoldenArches, timeout=86400),
 ])
 server = Flask(__name__)
-MessageLoop(bot).run_as_thread()
-print('Listening ...')
+# MessageLoop(bot).run_as_thread()
+bot.message_loop()
+
+# print('Listening ...')
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
@@ -222,8 +229,8 @@ def webhook():
 if __name__ == "__main__":
     # for line in open('id.json', 'r'):
     #     record = json.loads(line)
-        # 群发消息
-        # bot.sendMessage(record['chatid'], "Thank you for participation. We are now preparing for the deployment so the bot will be stopped.")
+    # 群发消息
+    # bot.sendMessage(record['chatid'], "Thank you for participation. We are now preparing for the deployment so the bot will be stopped.")
     # schedule.every().day.at(record["time"]).do(send_message, chatid=record['chatid'])
     # Thread(target=schedule_checker).start()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
