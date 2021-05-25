@@ -4,10 +4,10 @@ import telepot
 from threading import Thread
 import json
 from telepot.loop import MessageLoop
-from flask import Flask, request
 from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.delegate import pave_event_space, per_chat_id, create_open
 from telepot.namedtuple import ReplyKeyboardMarkup
+from flask import Flask, request
 import requests
 import os
 from datetime import datetime
