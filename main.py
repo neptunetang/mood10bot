@@ -131,7 +131,7 @@ class GoldenArches(telepot.helper.ChatHandler):
         elif self.indicator == 'snack':
             if content_type == 'photo':
                 file_name = str(chat_id) + '  ' + str(datetime.now().date()) + '  ' + str(
-                    datetime.now().time()) + '.png'
+                    datetime.now().time()) + 'utc.png'
                 self.message['image'] = file_name
                 bot.sendPhoto(MASTER, msg['photo'][-1]['file_id'], file_name)
                 mark_up = ReplyKeyboardMarkup(
@@ -198,7 +198,7 @@ class GoldenArches(telepot.helper.ChatHandler):
             #     handle.close()
             requests.post(url=URL, headers=HEADERS, json=self.message)
             bot.sendMessage(chat_id, 'Message Accepted. Thank you very much again for the input. Have a nice day:)')
-            reminder_master = 'user ' + str(chat_id) + ' has completed today\'s input'
+            bot.sendMessage(MASTER, self.message)
             bot.sendMessage(MASTER, reminder_master)
             self.indicator = 'registration'
 
