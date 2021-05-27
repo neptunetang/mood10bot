@@ -213,7 +213,7 @@ class GoldenArches(telepot.helper.ChatHandler):
             #     json.dump(self.message, handle)
             #     handle.write("\n")
             #     handle.close()
-            # requests.post(url=URL, headers=HEADERS, json=self.message)
+            requests.post(url=URL, headers=HEADERS, json=self.message)
             bot.sendMessage(chat_id, 'Message Accepted. Thank you very much again for the input. Have a nice day:)')
             reminder_master = self.message
             bot.sendMessage(MASTER, reminder_master)
