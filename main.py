@@ -72,7 +72,7 @@ class GoldenArches(telepot.helper.ChatHandler):
                                 'Hi, we are Data-enabled design Mood Team 10. This is the data-collecting telegram bot run by MoodTeam10. You can contact @NeptuneTang or on our Teams channel if something serious happens. '
                                 'Our research goal is to find out the relationship between stress eating, flavor and mood.')
                 bot.sendMessage(chat_id,
-                                'Select /input if you want to start your input. (reminder /set_reminder will be fixed later:) ')
+                                'Select /input if you want to start your input. (or reminder /set_reminder if you want a reminder for your input ')
 
                 self.step = 'none'
             # elif msg['text'] == 'yes':
