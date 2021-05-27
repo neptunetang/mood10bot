@@ -11,6 +11,7 @@ from telepot.namedtuple import ReplyKeyboardMarkup
 import requests
 import os
 from datetime import datetime
+import re
 
 TOKEN = '1694116177:AAEr9gLPK__8YNLUx9KAsRZ1gEHwG4qzkqU'
 URL = "https://data.id.tue.nl/datasets/entity/1145/item/"
@@ -30,7 +31,6 @@ def schedule_checker():
     while True:
         schedule.run_pending()
         time.sleep(1)
-
 
 def send_message(chatid):
     bot.sendMessage(chatid,
@@ -99,6 +99,21 @@ class GoldenArches(telepot.helper.ChatHandler):
             #     reminder_master = 'user ' + str(self.info['chatid']) + ' has registered, the time is ' + self.info['time']
             #     bot.sendMessage(MASTER, reminder_master)
             #     self.step = 'none'
+            elif msg['text'] == '/set_reminder':
+                bot.sendMessage(chat_id,
+                                text='When do you want to get the reminder every day? (e.g. 19:00 or 16:35) Keep in mind that the reminder might not work due to some Internet issue.(and cannot be delete due to the schedule package!!!)')
+                self.indicator = 'recoretime'
+            elif self.indicator == 'recordtime':
+                time = msg['text']
+                if re.match(r'\d{2}:\d{2}', time) or re.match(r'\d{1}:\d{2}', time):
+                    schedule.every().day.at(time).do(send_message, chatid=chat_id)
+                    bot.sendMessage(chat_id,
+                                "Thank you very much for the input. We will send you a reminder by then. You can also type /input to start your input anytime you want.")
+                    reminder_master = 'user ' + str(chat_id) + ' has registered, the time is ' + time
+                    bot.sendMessage(MASTER, reminder_master)
+                else:
+                    bot.sendMessage(chat_id,
+                                    "The format is not correct, please type in again.")
             elif msg['text'] == '/input':
                 mark_up = ReplyKeyboardMarkup(
                     keyboard=[['Not at all'], ['A little bit stressful'], ['Medium level'], ['Very stressful']],
@@ -249,5 +264,5 @@ if __name__ == "__main__":
     # 群发消息
     # bot.sendMessage(record['chatid'], "Thank you for participation. We are now preparing for the deployment so the bot will be stopped.")
     # schedule.every().day.at(record["time"]).do(send_message, chatid=record['chatid'])
-    # Thread(target=schedule_checker).start()
+    Thread(target=schedule_checker).start()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
