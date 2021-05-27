@@ -34,7 +34,7 @@ def schedule_checker():
 
 def send_message(chatid):
     bot.sendMessage(chatid,
-                    "Hello, this is a reminder for input: /input, if you have already filled in, please ignore this message. Thank you very much!")
+                    "Hello, this is a reminder for input: /input, if you have already filled in, please ignore this message. Thank you very much!",)
     bot.sendMessage(MASTER, 'reminder for ' + str(chatid) + ' has sent.')
 
 
@@ -44,7 +44,6 @@ class GoldenArches(telepot.helper.ChatHandler):
         self.indicator = 'registration'
         self.step = 'none'
         self.message = {}
-        self.info = {}
 
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
@@ -101,16 +100,22 @@ class GoldenArches(telepot.helper.ChatHandler):
             #     self.step = 'none'
             elif msg['text'] == '/set_reminder':
                 bot.sendMessage(chat_id,
-                                text='When do you want to get the reminder every day? (e.g. 19:00 or 16:35) Keep in mind that the reminder might not work due to some Internet issue.(and cannot be delete due to the schedule package!!!)')
-                self.indicator = 'recoretime'
-            elif self.indicator == 'recordtime':
-                time = msg['text']
-                if re.match(r'\d{2}:\d{2}', time) or re.match(r'\d{1}:\d{2}', time):
-                    schedule.every().day.at(time).do(send_message, chatid=chat_id)
+                                text='When do you want to get the reminder every day? (e.g. 19:00 or 16:35) Keep in mind that the reminder might not work due to some Internet issue.(and *cannot* be deleted due to the schedule package!!!)',
+                                parse_mode='Markdown')
+                self.step = 'step'
+            elif self.step == 'step':
+                record_time = msg['text']
+                print(record_time)
+                print(re.match(r'\d{2}:\d{2}', record_time))
+                print(re.match(r'\d{1}:\d{2}', record_time))
+
+                if re.match(r'\d{2}:\d{2}', record_time) or re.match(r'\d{1}:\d{2}', record_time):
+                    schedule.every().day.at(record_time).do(send_message, chatid=chat_id)
                     bot.sendMessage(chat_id,
                                 "Thank you very much for the input. We will send you a reminder by then. You can also type /input to start your input anytime you want.")
-                    reminder_master = 'user ' + str(chat_id) + ' has registered, the time is ' + time
+                    reminder_master = 'user ' + str(chat_id) + ' has registered, the time is ' + record_time
                     bot.sendMessage(MASTER, reminder_master)
+                    self.step = 'none'
                 else:
                     bot.sendMessage(chat_id,
                                     "The format is not correct, please type in again.")
