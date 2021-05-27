@@ -130,10 +130,9 @@ class GoldenArches(telepot.helper.ChatHandler):
             self.indicator = 'snack'
         elif self.indicator == 'snack':
             if content_type == 'photo':
-                file_name = str(chat_id) + '  ' + str(datetime.now().date()) + '  ' + str(
+                self.file_name = str(chat_id) + '  ' + str(datetime.now().date()) + '  ' + str(
                     datetime.now().time()) + '.png'
-                self.message['image'] = file_name
-                bot.sendPhoto(MASTER, msg['photo'][-1]['file_id'], file_name)
+                self.pic = msg['photo'][-1]['file_id']
                 mark_up = ReplyKeyboardMarkup(
                     keyboard=[['1-not at all(yogurt, banana,...)'], ['2-a little bit crunchy(chocolate,...)'],
                               ['3-medium crunchy(sweets,...)'], ['4-very crunchy(nuts,apple...)'],
@@ -142,23 +141,47 @@ class GoldenArches(telepot.helper.ChatHandler):
                 bot.sendMessage(chat_id,
                                 text='Thanks for the pictrue! Can you indicate the crunchy level(1-5) of your snack? Example are just given for reference, you can judge it on your own.',
                                 reply_markup=mark_up)
-                self.step = 'crunchy'
-            elif self.step == 'crunchy':
-                self.message['crunchy'] = msg['text']
-                bot.sendMessage(chat_id,
-                                text='Last question! This is an open question. Any comments are welcome:)')
-                bot.sendMessage(chat_id,
-                                text='Do you have any comments? For example, how do you feel after listen to the crunchy sound? If not, please click /none')
-                self.indicator = 'comment'
-            elif msg['text'] != '/no':
+                self.indicator = 'onceagain'
+            elif msg['text'] != '/no' and self.indicator == 'snack':
                 bot.sendMessage(chat_id, "Sorry, please send me a photo via picture, not via document!")
-            else:
+            elif msg['text'] == '/no' and self.indicator == 'snack':
                 self.message['image'] = 'no image input'
                 bot.sendMessage(chat_id,
                                 text='Last question! This is an open question. Any comments are welcome:)')
                 bot.sendMessage(chat_id,
                                 text='Do you have any comments? For example, how do you feel after listen to the crunchy sound? If not, please click /none')
                 self.indicator = "comment"
+        elif self.indicator == 'onceagain':
+            if self.step == 'morepic':
+                answer = msg['text']
+                if answer == 'yes':
+                    bot.sendMessage(chat_id,
+                                    text='Please upload your picture ;)')
+                    self.indicator = 'snack'
+                    self.step = 'none'
+                elif answer == 'no':
+                    bot.sendMessage(chat_id,
+                                    text='Ok, we will move on ;)')
+                    bot.sendMessage(chat_id,
+                                    text='How do you feel after having snacks? If not, please click /none')
+                    self.indicator = 'aboutday'
+                    self.step = 'none'
+            else:
+                bot.sendPhoto(MASTER, self.pic, self.file_name+msg['text'])
+                mark_up = ReplyKeyboardMarkup(
+                    keyboard=[['yes'], ['no']],
+                    one_time_keyboard=True)
+                bot.sendMessage(chat_id,
+                            text='Do you want to upload more food picture?', reply_markup=mark_up)
+                self.step = 'morepic'
+        elif self.indicator == 'aboutday':
+            self.message['aboutsnack'] = msg['text']
+            bot.sendMessage(chat_id,
+                            text='Last question! This is an open question. Any comments are welcome:)')
+            bot.sendMessage(chat_id,
+                            text='Do you have any comments? For example, how do you feel after listen to the crunchy sound? If not, please click /none')
+            self.indicator = 'comment'
+
             # if self.step == 'changing mood':
             #     self.message['happy_after_snack'] = msg['text']
             # elif self.step == 'guilty':
@@ -186,19 +209,13 @@ class GoldenArches(telepot.helper.ChatHandler):
 
         elif self.indicator == 'comment':
             self.message['comment'] = msg['text']
-            #     bot.sendMessage(chat_id, text="Thank you. Can I ask for a picture?")
-            #     self.indicator = 'pic'
-            # elif self.indicator == 'pic':
-            #     file_name = 'pic/' + str(t) + '  ' + str(chat_id) + '.png'
-            #     bot.download_file(msg['photo'][-1]['file_id'], file_name)
-            #     self.message['picture'] = msg['photo'][-1]['file_id']
             # with open('message.json', 'a') as handle:
             #     json.dump(self.message, handle)
             #     handle.write("\n")
             #     handle.close()
-            requests.post(url=URL, headers=HEADERS, json=self.message)
+            # requests.post(url=URL, headers=HEADERS, json=self.message)
             bot.sendMessage(chat_id, 'Message Accepted. Thank you very much again for the input. Have a nice day:)')
-            reminder_master = 'user ' + str(chat_id) + ' has completed today\'s input'
+            reminder_master = self.message
             bot.sendMessage(MASTER, reminder_master)
             self.indicator = 'registration'
 
