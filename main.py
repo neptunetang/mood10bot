@@ -10,14 +10,23 @@ from telepot.delegate import pave_event_space, per_chat_id, create_open
 from telepot.namedtuple import ReplyKeyboardMarkup
 import requests
 import os
-from datetime import datetime
+import datetime
 import re
+
+def send_message(chatid):
+    bot.sendMessage(chatid,
+                    "Hello, this is a reminder for input: /input, if you have already filled in, please ignore this message. Thank you very much!",)
+    bot.sendMessage(MASTER, 'reminder for ' + str(chatid) + ' has sent.')
 
 TOKEN = '1694116177:AAEr9gLPK__8YNLUx9KAsRZ1gEHwG4qzkqU'
 URL = "https://data.id.tue.nl/datasets/entity/1145/item/"
 # URL = "https://data.id.tue.nl/datasets/entity/1174/item/"
 MASTER = 234677771
-REGISTERED = []
+REGISTERED = [[1764152133, "23:00", schedule.every().day.at("21:00").do(send_message, chatid=1764152133)],
+              [1761149477, "01:00", schedule.every().day.at("23:00").do(send_message, chatid=1761149477)],
+              [MASTER, "14:00", schedule.every().day.at("12:00").do(send_message, chatid=MASTER)],
+              [995436996, "13:45", schedule.every().day.at("11:45").do(send_message, chatid=995436996)],
+              [995436996, "13:40", schedule.every().day.at("11:35").do(send_message, chatid=995436996)]]
 
 HEADERS = {
     'api_token': 'AbTVOcUtsMhJPqWcOPKxp5/kPz7nq/+UBN+YuT3Q988N/URihoXwz69xzxFI5ZRe',
@@ -31,11 +40,6 @@ def schedule_checker():
     while True:
         schedule.run_pending()
         time.sleep(1)
-
-def send_message(chatid):
-    bot.sendMessage(chatid,
-                    "Hello, this is a reminder for input: /input, if you have already filled in, please ignore this message. Thank you very much!",)
-    bot.sendMessage(MASTER, 'reminder for ' + str(chatid) + ' has sent.')
 
 
 class GoldenArches(telepot.helper.ChatHandler):
@@ -100,25 +104,54 @@ class GoldenArches(telepot.helper.ChatHandler):
             #     self.step = 'none'
             elif msg['text'] == '/set_reminder':
                 bot.sendMessage(chat_id,
-                                text='When do you want to get the reminder every day? (e.g. 19:00 or 16:35) Keep in mind that the reminder might not work due to some Internet issue.(and *cannot* be deleted due to the schedule package!!!)',
-                                parse_mode='Markdown')
-                self.step = 'step'
-            elif self.step == 'step':
+                                text='When do you want to get the reminder every day? (in HH:MM e.g. 19:00 or 16:35) Keep in mind that the reminder might not work due to some Internet issue. Click /back if you accidently end up here.')
+                self.step = 'reminder'
+            elif self.step == 'reminder' and msg['text'] !="/back":
                 record_time = msg['text']
-                print(record_time)
-                print(re.match(r'\d{2}:\d{2}', record_time))
-                print(re.match(r'\d{1}:\d{2}', record_time))
-
-                if re.match(r'\d{2}:\d{2}', record_time) or re.match(r'\d{1}:\d{2}', record_time):
-                    schedule.every().day.at(record_time).do(send_message, chatid=chat_id)
+                if re.match(r'\d{2}:\d{2}', record_time):
+                    timestamp = datetime.datetime.strptime(record_time, "%H:%M")
+                    timestamp -= datetime.timedelta(hours=2)
+                    record_time_utc = datetime.datetime.strftime(timestamp, "%H:%M")
+                    job = schedule.every().day.at(record_time_utc).do(send_message, chatid=chat_id)
+                    record = [chat_id, record_time, job]
+                    REGISTERED.append(record)
                     bot.sendMessage(chat_id,
                                 "Thank you very much for the input. We will send you a reminder by then. You can also type /input to start your input anytime you want.")
-                    reminder_master = 'user ' + str(chat_id) + ' has registered, the time is ' + record_time
+                    reminder_master = 'user ' + str(chat_id) + ' has registered, the time is ' + record_time +'('+record_time_utc+')'
                     bot.sendMessage(MASTER, reminder_master)
                     self.step = 'none'
                 else:
                     bot.sendMessage(chat_id,
                                     "The format is not correct, please type in again.")
+            elif msg['text'] == '/remove_reminder':
+                list = []
+                for i in REGISTERED:
+                    if i[0] == chat_id:
+                        list.append([i[1]])
+                if len(list) == 0:
+                    bot.sendMessage(chat_id,
+                                    "You don't have any reminder yet. Set a new reminder by /set_reminder")
+                else:
+                    mark_up = ReplyKeyboardMarkup(
+                        keyboard=list,
+                        one_time_keyboard=True)
+                    bot.sendMessage(chat_id,
+                                    "Please select the reminder that you want to delete. Click /back if you accidently end up here.", reply_markup=mark_up)
+                    self.step = 'delete'
+            elif self.step == 'delete' and msg['text'] != '/back':
+                delete_time = msg['text']
+                for i in REGISTERED:
+                    if i[1] == delete_time:
+                        schedule.cancel_job(i[2])
+                        REGISTERED.remove(i)
+                        bot.sendMessage(chat_id,
+                                    "Your reminder is deleted. Set a new reminder by /set_reminder")
+                        break
+                self.step = 'none'
+            elif msg['text'] == '/back':
+                bot.sendMessage(chat_id,
+                                "Sure, you can continue with other operations.",)
+                self.step = 'none'
             elif msg['text'] == '/input':
                 mark_up = ReplyKeyboardMarkup(
                     keyboard=[['Not at all'], ['A little bit stressful'], ['Medium level'], ['Very stressful']],
@@ -150,8 +183,8 @@ class GoldenArches(telepot.helper.ChatHandler):
             self.indicator = 'snack'
         elif self.indicator == 'snack':
             if content_type == 'photo':
-                self.file_name = str(chat_id) + '  ' + str(datetime.now().date()) + '  ' + str(
-                    datetime.now().time()) + '.png'
+                self.file_name = str(chat_id) + '  ' + str(datetime.datetime.now().date()) + '  ' + str(
+                    datetime.datetime.now().time()+datetime.timedelta(hours=2)) + '.png'
                 self.pic = msg['photo'][-1]['file_id']
                 mark_up = ReplyKeyboardMarkup(
                     keyboard=[['1-not at all(yogurt, banana,...)'], ['2-a little bit crunchy(chocolate,...)'],
@@ -269,5 +302,6 @@ if __name__ == "__main__":
     # 群发消息
     # bot.sendMessage(record['chatid'], "Thank you for participation. We are now preparing for the deployment so the bot will be stopped.")
     # schedule.every().day.at(record["time"]).do(send_message, chatid=record['chatid'])
+
     Thread(target=schedule_checker).start()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))

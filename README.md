@@ -7,7 +7,8 @@ a telegram bot for DBM160 @mood10bot
 - v2.02：本地运行√ 设置定时提醒√ 接受用户：emoji，文字输入
 - v3.01：Heroku运行成功，可以发送到data foundry，图片信息发送给master
 - v3.02: 解决只能上传一张图片的问题，添加上传图片后的相关问卷
-- v3.03: 解决定时发送提醒的问题，package原因无法删除提醒（太轻量级了schedule！！
+- v3.03：解决定时发送提醒的问题，package原因无法删除提醒（太轻量级了schedule！！
+- v3.04：解决删除提醒的设置，解决时差问题
 
 ## TODO: 
 - 暂无
