@@ -2,10 +2,7 @@ import time
 import telepot
 import schedule
 from threading import Thread
-import json
-from telepot.loop import MessageLoop
 from flask import Flask, request
-from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from telepot.delegate import pave_event_space, per_chat_id, create_open
 from telepot.namedtuple import ReplyKeyboardMarkup
 import requests
@@ -140,9 +137,10 @@ class GoldenArches(telepot.helper.ChatHandler):
                 for i in REGISTERED:
                     if i[1] == delete_time:
                         schedule.cancel_job(i[2])
-                        REGISTERED.remove(i)
                         bot.sendMessage(chat_id,
                                     "Your reminder is deleted. Set a new reminder by /set_reminder", reply_markup = telepot.namedtuple.ReplyKeyboardRemove())
+                        bot.sendMessage(MASTER, i[0]+" has deleted reminder at" + i[1])
+                        REGISTERED.remove(i)
                         break
                 self.step = 'none'
             elif msg['text'] == '/back':
