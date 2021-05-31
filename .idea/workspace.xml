@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d4486c3-4dc5-426c-b049-ecb52076ab1c" name="Default Changelist" comment="hide unnecessary keyboard" />
+    <list default="true" id="9d4486c3-4dc5-426c-b049-ecb52076ab1c" name="Default Changelist" comment="set the delete funtion more pretty">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -106,7 +108,7 @@
       <workItem from="1621853168055" duration="6493000" />
       <workItem from="1622146679079" duration="3783000" />
       <workItem from="1622285383541" duration="24000" />
-      <workItem from="1622456759813" duration="5982000" />
+      <workItem from="1622456759813" duration="7047000" />
     </task>
     <task id="LOCAL-00001" summary="update accroding to the informed step">
       <created>1621857600202</created>
@@ -199,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622462915539</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="set the delete funtion more pretty">
+      <created>1622463254265</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1622463254265</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +237,8 @@
     <MESSAGE value="add remove_reminder to the bot, fix the timezone problem with the server" />
     <MESSAGE value="fix the initial scheduler" />
     <MESSAGE value="hide unnecessary keyboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="hide unnecessary keyboard" />
+    <MESSAGE value="set the delete funtion more pretty" />
+    <option name="LAST_COMMIT_MESSAGE" value="set the delete funtion more pretty" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mood10bot$main.coverage" NAME="main Coverage Results" MODIFIED="1622460764735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

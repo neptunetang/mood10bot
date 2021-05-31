@@ -179,7 +179,7 @@ class GoldenArches(telepot.helper.ChatHandler):
         elif self.indicator == 'snack':
             if content_type == 'photo':
                 self.file_name = str(chat_id) + '  ' + str(datetime.datetime.now().date()) + '  ' + str(
-                    datetime.datetime.now().time()+datetime.timedelta(hours=2)) + '.png'
+                    datetime.datetime.now().time()) + '(+2).png'
                 self.pic = msg['photo'][-1]['file_id']
                 mark_up = ReplyKeyboardMarkup(
                     keyboard=[['1-not at all(yogurt, banana,...)'], ['2-a little bit crunchy(chocolate,...)'],
