@@ -303,6 +303,6 @@ if __name__ == "__main__":
     # bot.sendMessage(record['chatid'], "Thank you for participation. We are now preparing for the deployment so the bot will be stopped.")
     # schedule.every().day.at(record["time"]).do(send_message, chatid=record['chatid'])
     for i in REGISTERED:
-        i[3]
+        i[2]
     Thread(target=schedule_checker).start()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
