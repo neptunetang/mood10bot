@@ -25,8 +25,8 @@ MASTER = 234677771
 REGISTERED = [[1764152133, "23:00", schedule.every().day.at("21:00").do(send_message, chatid=1764152133)],
               [1761149477, "01:00", schedule.every().day.at("23:00").do(send_message, chatid=1761149477)],
               [MASTER, "14:00", schedule.every().day.at("12:00").do(send_message, chatid=MASTER)],
-              [995436996, "13:45", schedule.every().day.at("11:45").do(send_message, chatid=995436996)],
-              [995436996, "13:40", schedule.every().day.at("11:35").do(send_message, chatid=995436996)]]
+              [995436996, "14:05", schedule.every().day.at("12:15").do(send_message, chatid=995436996)],
+              [995436996, "13:55", schedule.every().day.at("11:55").do(send_message, chatid=995436996)]]
 
 HEADERS = {
     'api_token': 'AbTVOcUtsMhJPqWcOPKxp5/kPz7nq/+UBN+YuT3Q988N/URihoXwz69xzxFI5ZRe',
@@ -302,6 +302,7 @@ if __name__ == "__main__":
     # 群发消息
     # bot.sendMessage(record['chatid'], "Thank you for participation. We are now preparing for the deployment so the bot will be stopped.")
     # schedule.every().day.at(record["time"]).do(send_message, chatid=record['chatid'])
-
+    for i in REGISTERED:
+        i[3]
     Thread(target=schedule_checker).start()
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))

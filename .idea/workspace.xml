@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9d4486c3-4dc5-426c-b049-ecb52076ab1c" name="Default Changelist" comment="update the README.md">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9d4486c3-4dc5-426c-b049-ecb52076ab1c" name="Default Changelist" comment="add remove_reminder to the bot, fix the timezone problem with the server">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +108,7 @@
       <workItem from="1621853168055" duration="6493000" />
       <workItem from="1622146679079" duration="3783000" />
       <workItem from="1622285383541" duration="24000" />
-      <workItem from="1622456759813" duration="4081000" />
+      <workItem from="1622456759813" duration="4866000" />
     </task>
     <task id="LOCAL-00001" summary="update accroding to the informed step">
       <created>1621857600202</created>
@@ -167,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622150472448</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="add remove_reminder to the bot, fix the timezone problem with the server">
+      <created>1622460991407</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1622460991407</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +199,8 @@
     <MESSAGE value="update the text of scheduling" />
     <MESSAGE value="fix a small but inside mainloop" />
     <MESSAGE value="update the README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="update the README.md" />
+    <MESSAGE value="add remove_reminder to the bot, fix the timezone problem with the server" />
+    <option name="LAST_COMMIT_MESSAGE" value="add remove_reminder to the bot, fix the timezone problem with the server" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/mood10bot$main.coverage" NAME="main Coverage Results" MODIFIED="1622460764735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
