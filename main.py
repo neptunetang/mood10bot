@@ -23,10 +23,7 @@ URL = "https://data.id.tue.nl/datasets/entity/1145/item/"
 # URL = "https://data.id.tue.nl/datasets/entity/1174/item/"
 MASTER = 234677771
 REGISTERED = [[1764152133, "23:00", schedule.every().day.at("21:00").do(send_message, chatid=1764152133)],
-              [1761149477, "01:00", schedule.every().day.at("23:00").do(send_message, chatid=1761149477)],
-              [MASTER, "14:00", schedule.every().day.at("12:00").do(send_message, chatid=MASTER)],
-              [995436996, "14:05", schedule.every().day.at("12:15").do(send_message, chatid=995436996)],
-              [995436996, "13:55", schedule.every().day.at("11:55").do(send_message, chatid=995436996)]]
+              [1761149477, "01:00", schedule.every().day.at("23:00").do(send_message, chatid=1761149477)]]
 
 HEADERS = {
     'api_token': 'AbTVOcUtsMhJPqWcOPKxp5/kPz7nq/+UBN+YuT3Q988N/URihoXwz69xzxFI5ZRe',
@@ -130,7 +127,7 @@ class GoldenArches(telepot.helper.ChatHandler):
                         list.append([i[1]])
                 if len(list) == 0:
                     bot.sendMessage(chat_id,
-                                    "You don't have any reminder yet. Set a new reminder by /set_reminder")
+                                    "You don't have any reminder yet. Set a new reminder by /set_reminder", reply_markup = bot.ReplyKeyboardRemove())
                 else:
                     mark_up = ReplyKeyboardMarkup(
                         keyboard=list,
@@ -145,7 +142,7 @@ class GoldenArches(telepot.helper.ChatHandler):
                         schedule.cancel_job(i[2])
                         REGISTERED.remove(i)
                         bot.sendMessage(chat_id,
-                                    "Your reminder is deleted. Set a new reminder by /set_reminder")
+                                    "Your reminder is deleted. Set a new reminder by /set_reminder", reply_markup = bot.ReplyKeyboardRemove())
                         break
                 self.step = 'none'
             elif msg['text'] == '/back':
@@ -174,7 +171,7 @@ class GoldenArches(telepot.helper.ChatHandler):
             self.indicator = 'stress'
         elif self.indicator == 'stress':
             self.message['stress'] = msg['text']
-            bot.sendMessage(chat_id, text='Next, which emoji will you pick for your day?')
+            bot.sendMessage(chat_id, text='Next, which emoji will you pick for your day?', reply_markup = bot.ReplyKeyboardRemove())
             self.indicator = 'emoji'
         elif self.indicator == 'emoji':
             self.message['emoji'] = msg['text']
@@ -196,11 +193,11 @@ class GoldenArches(telepot.helper.ChatHandler):
                                 reply_markup=mark_up)
                 self.indicator = 'onceagain'
             elif msg['text'] != '/no' and self.indicator == 'snack':
-                bot.sendMessage(chat_id, "Sorry, please send me a photo via picture, not via document!")
+                bot.sendMessage(chat_id, "Sorry, please send me a photo via picture, not via document!", reply_markup = bot.ReplyKeyboardRemove())
             elif msg['text'] == '/no' and self.indicator == 'snack':
                 self.message['image'] = 'no image input'
                 bot.sendMessage(chat_id,
-                                text='Last question! This is an open question. Any comments are welcome:)')
+                                text='Last question! This is an open question. Any comments are welcome:)', reply_markup = bot.ReplyKeyboardRemove())
                 bot.sendMessage(chat_id,
                                 text='Do you have any comments? For example, how do you feel after listen to the crunchy sound? If not, please click /none')
                 self.indicator = "comment"
@@ -209,12 +206,12 @@ class GoldenArches(telepot.helper.ChatHandler):
                 answer = msg['text']
                 if answer == 'yes':
                     bot.sendMessage(chat_id,
-                                    text='Please upload your picture ;)')
+                                    text='Please upload your picture ;)', reply_markup = bot.ReplyKeyboardRemove())
                     self.indicator = 'snack'
                     self.step = 'none'
                 elif answer == 'no':
                     bot.sendMessage(chat_id,
-                                    text='Ok, we will move on ;)')
+                                    text='Ok, we will move on ;)', reply_markup = bot.ReplyKeyboardRemove())
                     bot.sendMessage(chat_id,
                                     text='How do you feel after having snacks? If not, please click /none')
                     self.indicator = 'aboutday'
@@ -230,7 +227,7 @@ class GoldenArches(telepot.helper.ChatHandler):
         elif self.indicator == 'aboutday':
             self.message['aboutsnack'] = msg['text']
             bot.sendMessage(chat_id,
-                            text='Last question! This is an open question. Any comments are welcome:)')
+                            text='Last question! This is an open question. Any comments are welcome:)', reply_markup = bot.ReplyKeyboardRemove())
             bot.sendMessage(chat_id,
                             text='Do you have any comments? For example, how do you feel after listen to the crunchy sound? If not, please click /none')
             self.indicator = 'comment'
