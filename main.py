@@ -179,7 +179,7 @@ class GoldenArches(telepot.helper.ChatHandler):
         elif self.indicator == 'snack':
             if content_type == 'photo':
                 self.file_name = str(chat_id) + '  ' + str(datetime.datetime.now().date()) + '  ' + str(
-                    datetime.datetime.now().time()) + '(+2).png'
+                    datetime.datetime.now().time()) + '(+2)'
                 self.pic = msg['photo'][-1]['file_id']
                 mark_up = ReplyKeyboardMarkup(
                     keyboard=[['1-not at all(yogurt, banana,...)'], ['2-a little bit crunchy(chocolate,...)'],
@@ -187,7 +187,7 @@ class GoldenArches(telepot.helper.ChatHandler):
                               ['5-super crunchy(chips,...)']],
                     one_time_keyboard=True)
                 bot.sendMessage(chat_id,
-                                text='Thanks for the pictrue! Can you indicate the crunchy level(1-5) of your snack? Example are just given for reference, you can judge it on your own.',
+                                text='Thanks for the pictrue! Can you indicate the crunchy level of your snack? Example are just given for reference, you can judge it on your own.',
                                 reply_markup=mark_up)
                 self.indicator = 'onceagain'
             elif msg['text'] != '/no' and self.indicator == 'snack':
